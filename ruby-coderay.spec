@@ -1,11 +1,11 @@
 %define pkgname coderay
 Summary:	Ruby library for syntax highlighting
 Name:		ruby-%{pkgname}
-Version:	0.9.1
+Version:	0.9.8
 Release:	1
 License:	LGPL
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	d6049cfb54b0702d7a40e59b37f74933
+# Source0-md5:	9e0e0cba383daba57ef7c256a1742965
 Group:		Development/Languages
 URL:		http://coderay.rubychan.de/
 BuildRequires:	rpmbuild(macros) >= 1.484
@@ -58,7 +58,7 @@ find -newer FOLDERS -o -print | xargs touch --reference %{SOURCE0}
 %build
 rdoc --ri --op ri lib
 rdoc --op rdoc lib
-rm -r ri/{GZip,String,Term}
+rm -r ri/{GZip,String}
 rm ri/created.rid
 
 %install
