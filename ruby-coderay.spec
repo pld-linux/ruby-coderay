@@ -1,11 +1,11 @@
 %define pkgname coderay
 Summary:	Ruby library for syntax highlighting
 Name:		ruby-%{pkgname}
-Version:	0.9.8
+Version:	1.0.4
 Release:	1
 License:	LGPL
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	9e0e0cba383daba57ef7c256a1742965
+# Source0-md5:	29b290fccf039aa13c4b34a97b505d96
 Group:		Development/Languages
 URL:		http://coderay.rubychan.de/
 BuildRequires:	rpmbuild(macros) >= 1.484
@@ -51,14 +51,14 @@ Dokumentacji w formacie ri dla %{pkgname}.
 %prep
 %setup -q -c
 %{__tar} xf %{SOURCE0} -O data.tar.gz | %{__tar} xz
-find -newer FOLDERS -o -print | xargs touch --reference %{SOURCE0}
+find -newer README_INDEX.rdoc -o -print | xargs touch --reference %{SOURCE0}
 
 %{__sed} -i -e 's|/usr/bin/env ruby|%{__ruby}|' bin/coderay*
 
 %build
 rdoc --ri --op ri lib
 rdoc --op rdoc lib
-rm -r ri/{GZip,String}
+rm -fr ri/{GZip,String}
 rm ri/created.rid
 
 %install
@@ -75,9 +75,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc FOLDERS lib/README
+%doc README_INDEX.rdoc
 %attr(755,root,root) %{_bindir}/coderay
-%attr(755,root,root) %{_bindir}/coderay_stylesheet
 %{ruby_rubylibdir}/%{pkgname}.rb
 %{ruby_rubylibdir}/%{pkgname}
 
