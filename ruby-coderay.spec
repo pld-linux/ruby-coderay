@@ -1,28 +1,23 @@
 %define pkgname coderay
-Summary:	Ruby library for syntax highlighting
+Summary:	Fast syntax highlighter engine for many programming languages
 Name:		ruby-%{pkgname}
-Version:	1.0.4
+Version:	1.0.9
 Release:	1
-License:	LGPL
+License:	MIT
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	29b290fccf039aa13c4b34a97b505d96
+# Source0-md5:	2e2619f9dc74f6443c80118c429752e1
 Group:		Development/Languages
 URL:		http://coderay.rubychan.de/
-BuildRequires:	rpmbuild(macros) >= 1.484
-BuildRequires:	ruby >= 1:1.8.6
-BuildRequires:	ruby-modules
-%{?ruby_mod_ver_requires_eq}
-#BuildArch:	noarch
+BuildRequires:	rpm-rubyprov
+BuildRequires:	rpmbuild(macros) >= 1.656
+BuildRequires:	sed >= 4.0
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-# nothing to be placed there. we're not noarch only because of ruby packaging
-%define		_enable_debug_packages	0
-
 %description
-CodeRay is a Ruby library for syntax highlighting.
-I try to make CodeRay easy to use and intuitive,
-but at the same time fully featured, complete, fast and
-efficient. Usage is simple: CodeRay.scan(code, :ruby).div 
+Coderay is a Ruby library for syntax highlighting. CodeRay is build to
+be easy to use and intuitive, but at the same time fully featured,
+complete, fast and efficient.
 
 %package rdoc
 Summary:	HTML documentation for %{pkgname}
@@ -49,24 +44,22 @@ ri documentation for %{pkgname}.
 Dokumentacji w formacie ri dla %{pkgname}.
 
 %prep
-%setup -q -c
-%{__tar} xf %{SOURCE0} -O data.tar.gz | %{__tar} xz
-find -newer README_INDEX.rdoc -o -print | xargs touch --reference %{SOURCE0}
-
-%{__sed} -i -e 's|/usr/bin/env ruby|%{__ruby}|' bin/coderay*
+%setup -q -n %{pkgname}-%{version}
+%{__sed} -i -e '1 s,#!.*ruby,#!%{__ruby},' bin/*
 
 %build
 rdoc --ri --op ri lib
 rdoc --op rdoc lib
 rm -fr ri/{GZip,String}
 rm ri/created.rid
+rm ri/cache.ri
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{ruby_rubylibdir},%{ruby_ridir},%{ruby_rdocdir}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{ruby_vendorlibdir},%{ruby_ridir},%{ruby_rdocdir}}
 
+cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 cp -a bin/* $RPM_BUILD_ROOT%{_bindir}
-cp -a lib/coderay* $RPM_BUILD_ROOT%{ruby_rubylibdir}
 cp -a ri/* $RPM_BUILD_ROOT%{ruby_ridir}
 cp -a rdoc $RPM_BUILD_ROOT%{ruby_rdocdir}/%{name}-%{version}
 
@@ -77,8 +70,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README_INDEX.rdoc
 %attr(755,root,root) %{_bindir}/coderay
-%{ruby_rubylibdir}/%{pkgname}.rb
-%{ruby_rubylibdir}/%{pkgname}
+%{ruby_vendorlibdir}/coderay.rb
+%{ruby_vendorlibdir}/coderay
 
 %files rdoc
 %defattr(644,root,root,755)
