@@ -10,6 +10,8 @@ Group:		Development/Languages
 URL:		http://coderay.rubychan.de/
 BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.656
+BuildRequires:	ruby-irb
+BuildRequires:	ruby-rdoc
 BuildRequires:	sed >= 4.0
 %if %(locale -a | grep -q '^en_US$'; echo $?)
 BuildRequires:	glibc-localedb-all
