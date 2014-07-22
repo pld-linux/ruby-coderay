@@ -2,7 +2,7 @@
 Summary:	Fast syntax highlighter engine for many programming languages
 Name:		ruby-%{pkgname}
 Version:	1.0.9
-Release:	1
+Release:	2
 License:	MIT
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
 # Source0-md5:	2e2619f9dc74f6443c80118c429752e1
