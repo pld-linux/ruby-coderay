@@ -1,15 +1,15 @@
 %define pkgname coderay
 Summary:	Fast syntax highlighter engine for many programming languages
 Name:		ruby-%{pkgname}
-Version:	1.0.9
-Release:	2
+Version:	1.1.3
+Release:	1
 License:	MIT
-Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
-# Source0-md5:	2e2619f9dc74f6443c80118c429752e1
+Source0:	https://rubygems.org/downloads/%{pkgname}-%{version}.gem
+# Source0-md5:	b726a821d66a6a46cc43c5534b079d8e
 Group:		Development/Languages
 URL:		http://coderay.rubychan.de/
 BuildRequires:	rpm-rubyprov
-BuildRequires:	rpmbuild(macros) >= 1.656
+BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	ruby-irb
 BuildRequires:	ruby-rdoc
 BuildRequires:	sed >= 4.0
@@ -59,7 +59,6 @@ Dokumentacji w formacie ri dla %{pkgname}.
 export LC_ALL=en_US.UTF-8
 rdoc --ri --op ri lib
 rdoc --op rdoc lib
-rm -fr ri/{GZip,String}
 rm ri/created.rid
 rm ri/cache.ri
 
